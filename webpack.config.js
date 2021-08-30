@@ -82,6 +82,9 @@ module.exports = (env, argv) => {
     console.log('Production mode');
     delete webpackConfig.devServer;
     webpackConfig.entry = ['./src/demo.jsx'];
+  } else if (argv.mode === "development") {
+    console.log('Development Mode');
+    webpackConfig.output["filename"] = "bundle.js"
   }
 
   return webpackConfig;
