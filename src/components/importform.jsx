@@ -58,11 +58,16 @@ class ImportForm extends Component {
   }
 
   handleSubmit(event, importCallback) {
+    // Convert the event into a standard object.
     event.preventDefault();
-    const data = new FormData(event.target);
-    data.set("autosave_logic", this.state.autosaveLogic);
-    this.props.updateInputFile(data.get("filepath"));
+    const form_data = new FormData(event.target);
+    const json_data = Object.fromEntries(form_data);
 
+    // Add some special parameters.
+    json_data["autosave_logic"] = this.state.autosaveLogic;
+    this.props.updateInputFile(json_data["filepath"]);
+
+    // Indicate we are loading.
     this.setState({
       loading: true,
       error: null
@@ -70,7 +75,8 @@ class ImportForm extends Component {
     
     fetch('http://localhost:2020/api/import', {
       method: 'POST',
-      body: data,
+      body: JSON.stringify(json_data),
+      headers: {'Content-Type': 'application/json'}
     }).then(response => {
       this.setState({ loading: false });
       response.json().then(data => {
