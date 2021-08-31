@@ -1749,7 +1749,7 @@ class Repo extends Component {
       this.setProgressPolling(true);
 
       const {out_name, root_dir, session} = this.state;
-      const render_url = `localhost:2020/api/render/${session}`;
+      const render_url = `/api/render/${session}`;
       this.apiRender(render_url).then(res => {
         this.setState({
           error: null,
@@ -1861,7 +1861,7 @@ class Repo extends Component {
       else {
         const {markerFile, imageFile} = this.state;
         const {out_name, root_dir, session} = this.state;
-        const save_url = `localhost:2020/api/save/${session}`;
+        const save_url = `/api/save/${session}`;
         try {
           const res = await fetch('http://'+save_url, {
             method: 'POST',
@@ -1937,7 +1937,7 @@ class Repo extends Component {
 
   getPublishProgress() {
     const {session} = this.state;
-    const progress_url = `localhost:2020/api/render/${session}/progress`;
+    const progress_url = `/api/render/${session}/progress`;
     fetch('http://'+progress_url).then(response => {
       return response.json();
     }).then(progress => {
@@ -2131,7 +2131,7 @@ class Repo extends Component {
     const key = encodeURIComponent(encodeURIComponent(map_path));
 
     try {
-      const url = `http://localhost:2020/api/mask_subsets/${key}`;
+      const url = `http:///api/mask_subsets/${key}`;
       const response = await fetch(url, {
         headers: {
           'pragma': 'no-cache',
@@ -2237,7 +2237,7 @@ class Repo extends Component {
     }
     // Double encoded URI component is required for flask
     const key = encodeURIComponent(encodeURIComponent(mask_path))
-    const response =  await fetch(`http://localhost:2020/api/validate/u32/${key}`, {
+    const response =  await fetch(`http:///api/validate/u32/${key}`, {
       headers: {
         'pragma': 'no-cache',
         'cache-control': 'no-store'
@@ -2621,8 +2621,8 @@ class Repo extends Component {
       shareButton = null;
       if (group != undefined) {
         const {session} = this.state;
-        const story_url = 'http://'+`localhost:2020/story/${session}`;
-        const preview_url = `localhost:2020/api/preview/${session}`;
+        const story_url = 'http://'+`/story/${session}`;
+        const preview_url = `/api/preview/${session}`;
         previewButton = (
           <button className="ui button teal" onClick={() => {
             this.apiRender(preview_url).then(res => {

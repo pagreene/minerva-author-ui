@@ -72,8 +72,9 @@ class ImportForm extends Component {
       loading: true,
       error: null
     });
-    
-    fetch('http://localhost:2020/api/import', {
+
+    // Post the data to the backend.
+    fetch('/api/import', {
       method: 'POST',
       body: JSON.stringify(json_data),
       headers: {'Content-Type': 'application/json'}
